@@ -30,6 +30,8 @@
     
     <context:component-scan base-package="com.test.chan"/>
     
+    <import resource="security-config.xml" />
+    
     <!-- middleware datasource  -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
           p:driverClassName="com.mysql.jdbc.Driver" p:url="jdbc:mysql://localhost/test"

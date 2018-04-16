@@ -80,7 +80,7 @@
 		<authentication-provider>
 			<user-service>
 				<user name="android" password="android" authorities="ROLE_APP" />
-				<user name="anti-criminal-user" password="anti-criminal_ids"
+				<user name="test-user" password="test-password"
 					authorities="ROLE_FILE" />
 			</user-service>
 		</authentication-provider>
@@ -96,7 +96,7 @@
 	<bean id="tokenStore"
 		class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore">
 		<property name="authenticationKeyGenerator">
-			<bean class="com.tfmm.ids.common.oauth.UniqueAuthenticationKeyGenerator" />
+			<bean class="com.test.chan.common.oauth.UniqueAuthenticationKeyGenerator" />
 		</property>
 	</bean>
 
@@ -131,7 +131,7 @@
 
 	<oauth:client-details-service id="clientDetails">
 		<!-- client -->
-		<oauth:client client-id="anti-criminal" secret="anti-criminal-secret"
+		<oauth:client client-id="test-security" secret="test-secret"
 			authorized-grant-types="password,authorization_code,refresh_token" authorities="ROLE_FILE"
 			scope="read" />
 
