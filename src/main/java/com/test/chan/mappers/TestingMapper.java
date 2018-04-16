@@ -3,8 +3,8 @@ package com.test.chan.mappers;
 import com.test.chan.beans.Testing;
 
 /**
- *
- * @author edwin < edwinkun at gmail dot com >
+ * 
+ * @author CHANMYAETHU
  */
 public interface TestingMapper {
 
