@@ -3,6 +3,9 @@ package com.test.chan.controllers;
 import com.test.chan.beans.User;
 import com.test.chan.services.UserService;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +22,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 public class HelloWorldRestController {
+    
+    private static final Logger logger = LoggerFactory.getLogger(HelloWorldRestController.class);
 
 	@Autowired
 	UserService userService;  //Service which will do all data retrieval/manipulation work
@@ -27,7 +32,8 @@ public class HelloWorldRestController {
 	//-------------------Retrieve All Users--------------------------------------------------------
 	
 	@RequestMapping(value = "/user/", method = RequestMethod.GET)
-	public ResponseEntity<List<User>> listAllUsers() {
+	public ResponseEntity<List<User>> listAllUsers(HttpServletRequest request) {
+                logger.debug("IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
 		List<User> users = userService.findAllUsers();
 		if(users.isEmpty()){
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
