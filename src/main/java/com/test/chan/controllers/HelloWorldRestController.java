@@ -34,6 +34,8 @@ public class HelloWorldRestController {
 	@RequestMapping(value = "/user/", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> listAllUsers(HttpServletRequest request) {
                 logger.debug("IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
+                logger.info(" Info IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
+                logger.error("Error IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
 		List<User> users = userService.findAllUsers();
 		if(users.isEmpty()){
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND

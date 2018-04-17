@@ -74,6 +74,9 @@ public class ApplicationLogger {
             }
             log.debug("Request Path info :" + request.getServletPath());
             log.debug("End Header Section of request ");
+            
+            log.debug("Client IP Address: " + request.getRemoteAddr());
+            log.info("Client IP Address: " + request.getRemoteAddr());
         }
     }
     //After -> All method within resource annotated with @Controller annotation 
