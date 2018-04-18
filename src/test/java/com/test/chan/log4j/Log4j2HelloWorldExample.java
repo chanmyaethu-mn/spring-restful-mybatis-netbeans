@@ -5,15 +5,15 @@
  */
 package com.test.chan.log4j;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author CHANMYAETHU
  */
 public class Log4j2HelloWorldExample {
-    private static final Logger logger = LoggerFactory.getLogger(Log4j2HelloWorldExample.class);
+    private static final Logger logger = LogManager.getLogger(Log4j2HelloWorldExample.class.getSimpleName());
 
    public static void main(String[] args) {
 

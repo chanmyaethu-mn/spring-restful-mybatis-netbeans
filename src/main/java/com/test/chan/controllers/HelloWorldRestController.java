@@ -4,8 +4,8 @@ import com.test.chan.beans.User;
 import com.test.chan.services.UserService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 public class HelloWorldRestController {
     
-    private static final Logger logger = LoggerFactory.getLogger(HelloWorldRestController.class);
+    private static final Logger logger = LogManager.getLogger(HelloWorldRestController.class.getSimpleName());
 
 	@Autowired
 	UserService userService;  //Service which will do all data retrieval/manipulation work

@@ -29,8 +29,13 @@
     
     <context:component-scan base-package="com.test.chan"/>
     <context:annotation-config/>
+    
+    <mvc:annotation-driven />
+    <mvc:default-servlet-handler />
+    
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <aop:aspectj-autoproxy />
+    <!--    <bean id="aspectServiceLogger" class="com.test.chan.common.log.LoggingAspect" />-->
     
     <import resource="security-config.xml" />
     
@@ -49,11 +54,17 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="/WEB-INF/configuration.xml" />
+        <!--        <property name="configLocation" value="/WEB-INF/configuration.xml" />-->
+        <property name="configLocation" value="/WEB-INF/mybatis-config.xml"/>
+    </bean>
+    
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
     
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.test.chan.mappers" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
     
     <bean id="transactionManager"

@@ -1,75 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
-    <property name="DEV_HOME" value="D:/logs" />
-    
-    <Appenders>
-
-        <!-- Console Appender -->
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout
-                pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n" />
-        </Console>
-
-        <!-- File Appender -->
-<!--        <File name="File" fileName="d:/logs/app.log">
-            <PatternLayout
-                pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n" />
-        </File>-->
-    
-        <RollingFile name="APPLICATION_DEBUG_LOG">
-            <FileName>d:/logs/application-debug-log.log</FileName>
-            <FilePattern>d:/logs/time-based-logs/application-debug-log-%d{yyyy-MM-dd-hh-mm}.log.zip</FilePattern>
-            <PatternLayout>
-                <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
-            </PatternLayout>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="2" modulate="true" />
-            </Policies>
-            <DefaultRolloverStrategy max="5" />
-        </RollingFile>
-        
-<!--        <RollingFile name="APPLICATION_INFO_LOG">
-            <FileName>d:/logs/application-info-log.log</FileName>
-            <FilePattern>d:/logs/time-based-logs/application-info-log-%d{yyyy-MM-dd-hh-mm}.log.zip</FilePattern>
-            <PatternLayout>
-                <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
-            </PatternLayout>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="2" modulate="true" />
-            </Policies>
-            <DefaultRolloverStrategy max="5" />
-        </RollingFile>-->
-        
-<!--        <RollingFile name="APPLICATION_ERROR_LOG">
-            <FileName>d:/logs/application-error-log.log</FileName>
-            <FilePattern>d:/logs/time-based-logs/application-error-log-%d{yyyy-MM-dd-hh-mm}.log.zip</FilePattern>
-            <PatternLayout>
-                <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
-            </PatternLayout>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="2" modulate="true" />
-            </Policies>
-            <DefaultRolloverStrategy max="5" />
-        </RollingFile>-->
-
-    </Appenders>
+<!DOCTYPE Configuration>
+<Configuration status="WARN">
     
     <Loggers>
-
-        <Logger name="com.test.chan" level="debug" additivity="false">
-            <AppenderRef ref="APPLICATION_DEBUG_LOG" />
+        <Logger name="com.test.chan" level ="DEBUG">
+            <AppenderRef ref="APPLICATION_LOG" />
         </Logger>
         
-<!--        <Logger name="com.test.chan" level="info" additivity="false">
-            <AppenderRef ref="APPLICATION_INFO_LOG" />
+<!--        <Logger name="com.test.chan.common.log" level ="DEBUG">
+            <AppenderRef ref="DATABASE_LOG" />
         </Logger>-->
-        
-<!--        <Logger name="com.test.chan" level="error" additivity="false">
-            <AppenderRef ref="APPLICATION_ERROR_LOG" />
-        </Logger>-->
-        
-        <Root level="trace">
-            <AppenderRef ref="Console" />
+                
+        <Root level="TRACE">
+            <AppenderRef ref="APPLICATION_LOG" />
+            <AppenderRef ref="STDOUT" />
+<!--            <AppenderRef ref="DATABASE_LOG" />-->
         </Root>
     </Loggers>
+
+    <Appenders>
+        <RollingFile name="APPLICATION_LOG" fileName="d:/logs/application-log.log"
+                     filePattern="d:/logs/time-based-logs/application-log-%d{yyyy-MM-dd-hh-mm}.log.zip">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="2" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="50" />
+        </RollingFile>
+        
+<!--        <RollingFile name="DATABASE_LOG" fileName="d:/logs/database-log.log"
+                     filePattern="d:/logs/time-based-logs/database-log-%d{yyyy-MM-dd-hh-mm}.log.zip">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="2" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="50" />
+        </RollingFile>-->
+
+
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd} %d{HH:mm:ss.SSS} - %msg%n" />
+        </Console>
+    </Appenders>
 </Configuration>
