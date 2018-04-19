@@ -6,6 +6,10 @@
         <Logger name="com.test.chan.controllers" level ="DEBUG" additivity="false">
             <AppenderRef ref="APPLICATION_LOG" />
         </Logger>
+        
+        <Logger name="com.test.chan.services" level ="DEBUG" additivity="false">
+            <AppenderRef ref="APPLICATION_LOG" />
+        </Logger>
                 
         <Root level="DEBUG">
             <AppenderRef ref="STDOUT" />

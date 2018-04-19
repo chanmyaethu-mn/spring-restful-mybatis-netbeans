@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -17,6 +18,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is a class to do logging for method in/out by watching.
+ * 
+ * @author CHANMYAETHU
+ */
 @Aspect
 @Component
 public class ApplicationLogger {
@@ -25,6 +31,10 @@ public class ApplicationLogger {
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
     public void controller() {
+    }
+
+    @Pointcut(value = "execution(public * *(..)) && (within(com.test.chan.services..*))")
+    public void serviceMethod() {
     }
 
     @Pointcut("execution(* *.*(..))")
@@ -49,10 +59,25 @@ public class ApplicationLogger {
      *
      * @param joinPoint
      */
-    @Before("controller() && allMethod()")
-    public void logBefore(JoinPoint joinPoint) {
+    @Before("controller() && allMethod() && args(..,request)")
+    public void logBefore(JoinPoint joinPoint, HttpServletRequest request) {
 
-        log.debug("<<<<<<<<<< START >>>>>>>>>>");
+        log.debug("<<<<<<<<<< START CONTROLLER >>>>>>>>>>");
+
+        String ipAddress = "NONE";
+
+        if (null != request) {
+            ipAddress = request.getRemoteAddr();
+        }
+        String className = joinPoint.getSignature().getDeclaringTypeName();
+        String methodName = joinPoint.getSignature().getName();
+        String arguments = Arrays.toString(joinPoint.getArgs());
+        String targetClass = joinPoint.getTarget().getClass().getName();
+        log.debug("Client IP : " + ipAddress);
+        log.debug("Class Name : " + className);
+        log.debug("Method Name : " + methodName);
+        log.debug("Argument : " + arguments);
+        log.debug("Target Class : " + targetClass);
 
     }
 
@@ -67,7 +92,7 @@ public class ApplicationLogger {
     public void logAfter(JoinPoint joinPoint, Object result) {
         String returnValue = this.getValue(result);
         log.debug("Method Return value : " + returnValue);
-        log.debug("<<<<<<<<<< END >>>>>>>>>>");
+        log.debug("<<<<<<<<<< END CONTROLLER >>>>>>>>>>");
     }
 
     /**
@@ -92,31 +117,49 @@ public class ApplicationLogger {
      * @return
      * @throws Throwable
      */
-    @Around("controller() && allMethod() && args(..,request)")
-    public Object logAround(ProceedingJoinPoint joinPoint, HttpServletRequest request) throws Throwable {
-
-         String ipAddress = "NONE";
-
+    @Around("controller() && allMethod()")
+    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        long start = System.currentTimeMillis();
         try {
-            if (null != request) {
-                ipAddress = request.getRemoteAddr();
-            }
+
             String className = joinPoint.getSignature().getDeclaringTypeName();
             String methodName = joinPoint.getSignature().getName();
-            String arguments = Arrays.toString(joinPoint.getArgs());
-            String targetClass = joinPoint.getTarget().getClass().getName();
+
             Object result = joinPoint.proceed();
-            log.debug("IP : " + ipAddress);
-            log.debug("Class Name : " + className);
-            log.debug("Method Name : " + methodName);
-            log.debug("Argument : " + arguments);
-            log.debug("Target Class : " + targetClass);
+
+            long elapsedTime = System.currentTimeMillis() - start;
+            log.debug(" Execution time : " + elapsedTime + " ms");
             return result;
         } catch (Exception e) {
             log.error("Illegal argument " + Arrays.toString(joinPoint.getArgs()) + " in "
                     + joinPoint.getSignature().getName() + "()");
             throw e;
         }
+    }
+
+    /**
+     * Logging service method before started
+     * 
+     * @param joinPoint 
+     */
+    @Before("serviceMethod()")
+    public void logServiceBefore(JoinPoint joinPoint) {
+
+        log.debug("<<<<<<<<<< START SERVICE >>>>>>>>>>");
+        log.debug("Method Name : " + joinPoint.getSignature().getName());
+
+    }
+
+    /**
+     * Logging after service method has completed
+     * 
+     * @param joinPoint 
+     */
+    @After("serviceMethod()")
+    public void logServiceAfter(JoinPoint joinPoint) {
+
+        log.debug("<<<<<<<<<< END SERVICE >>>>>>>>>>");
+
     }
 
     private String getValue(Object result) {
