@@ -33,9 +33,9 @@ public class HelloWorldRestController {
 	
 	@RequestMapping(value = "/user/", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> listAllUsers(HttpServletRequest request) {
-                logger.debug("IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
-                logger.info(" Info IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
-                logger.error("Error IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
+//                logger.debug("IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
+//                logger.info(" Info IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
+//                logger.error("Error IP -> " + request.getRemoteAddr() + "User -> " + request.getRemoteUser());
 		List<User> users = userService.findAllUsers();
 		if(users.isEmpty()){
 			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
@@ -47,7 +47,7 @@ public class HelloWorldRestController {
 	//-------------------Retrieve Single User--------------------------------------------------------
 	
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> getUser(@PathVariable("id") long id) {
+	public ResponseEntity<User> getUser(@PathVariable("id") long id, HttpServletRequest request) {
 		System.out.println("Fetching User with id " + id);
 		User user = userService.findById(id);
 		if (user == null) {

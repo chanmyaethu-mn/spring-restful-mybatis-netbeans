@@ -3,45 +3,29 @@
 <Configuration status="WARN">
     
     <Loggers>
-        <Logger name="com.test.chan" level ="DEBUG">
+        <Logger name="com.test.chan.controllers" level ="DEBUG" additivity="false">
             <AppenderRef ref="APPLICATION_LOG" />
         </Logger>
-        
-<!--        <Logger name="com.test.chan.common.log" level ="DEBUG">
-            <AppenderRef ref="DATABASE_LOG" />
-        </Logger>-->
                 
-        <Root level="TRACE">
-            <AppenderRef ref="APPLICATION_LOG" />
+        <Root level="DEBUG">
             <AppenderRef ref="STDOUT" />
-<!--            <AppenderRef ref="DATABASE_LOG" />-->
+            <AppenderRef ref="APPLICATION_LOG" />
         </Root>
     </Loggers>
 
     <Appenders>
         <RollingFile name="APPLICATION_LOG" fileName="d:/logs/application-log.log"
-                     filePattern="d:/logs/time-based-logs/application-log-%d{yyyy-MM-dd-hh-mm}.log.zip">
+                     filePattern="d:/logs/time-based-logs/application-log-%d{yyyy-MM-dd}.log.zip">
             <PatternLayout>
                 <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="2" modulate="true" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="20 MB" />
             </Policies>
             <DefaultRolloverStrategy max="50" />
         </RollingFile>
         
-<!--        <RollingFile name="DATABASE_LOG" fileName="d:/logs/database-log.log"
-                     filePattern="d:/logs/time-based-logs/database-log-%d{yyyy-MM-dd-hh-mm}.log.zip">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</Pattern>
-            </PatternLayout>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="2" modulate="true" />
-            </Policies>
-            <DefaultRolloverStrategy max="50" />
-        </RollingFile>-->
-
-
         <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd} %d{HH:mm:ss.SSS} - %msg%n" />
         </Console>
