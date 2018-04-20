@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.chan.mappers.UserMAP">
+
+    <resultMap id="UserMap" type="com.test.chan.beans.LoginUser">
+        <result property="userId" column="UserID" />
+        <result property="emailAddress" column="EmailAddress" />
+        <result property="salt" column="Salt" />
+        <result property="pwdKey" column="Key" />
+    </resultMap>
+	
+<!--    <resultMap id="result" type="searchUserRes">
+        <result property="userId" column="ID" />
+        <result property="gender" column="GENDER" />
+        <result property="profilePic" column="PROFILEPIC" />
+        <result property="username" column="USERNAME" />
+        <result property="email" column="EMAIL" />
+        <result property="dateOfBirth" column="DOB" />
+        <result property="facebookId" column="FACEBOOK_ID" />
+        <collection property="signupReasonList" ofType="String" select="getSignupReasonList" column="ID" />
+    </resultMap>-->
+
+    <select id="findByUsername" parameterType="String" resultMap="UserMap">
+        SELECT
+        UserID, EmailAddress, Salt, aul.Key
+        FROM admin_user_list aul
+        WHERE UserID = #{userId}
+    </select>
+
+    <select id="findById" parameterType="String" resultMap="UserMap">
+        SELECT
+        UserID, EmailAddress, Salt, aul.Key
+        FROM admin_user_list aul
+        WHERE UserID = #{userId}
+    </select>
+
+</mapper>
