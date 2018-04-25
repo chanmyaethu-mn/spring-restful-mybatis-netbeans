@@ -18,6 +18,8 @@
         <commons-io>2.6</commons-io>
         <org.apache.commons>3.7</org.apache.commons>
         <log4j-slf4j-impl>2.8.2</log4j-slf4j-impl>
+        <log4j-core>2.8.2</log4j-core>
+        <com.fasterxml.jackson.core>2.8.5</com.fasterxml.jackson.core>
     </properties>
     
     <dependencies>
@@ -169,6 +171,12 @@
         </dependency>
         
         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j-core}</version>
+        </dependency>
+        
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.6</version>
@@ -225,6 +233,18 @@
             <version>${org.springframework.security}</version>
         </dependency>
         <!-- security end -->
+        
+        <!-- Jackson JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${com.fasterxml.jackson.core}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${com.fasterxml.jackson.core}</version>
+        </dependency>
         
     </dependencies>
 
